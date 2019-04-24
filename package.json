@@ -22,6 +22,7 @@
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
+    "uuid": "^3.3.2"
   },
   "jest": {
     "transform": {
@@ -36,5 +37,6 @@
       "json",
       "node"
     ]
+    "@types/uuid": "^3.4.4"
   }
 }
