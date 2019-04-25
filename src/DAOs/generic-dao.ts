@@ -1,28 +1,32 @@
-export class GenericDAO {
+import { Base } from "../models/base";
+
+export abstract class GenericDAO<Model extends Base>{
     protected database: any;
+    protected modelName: string;
 
-    constructor(database: any) {
+    constructor(modelName: string, database: any) {
         this.database = database;
+        this.modelName = modelName;
+
+        const defaults: any = {};
+        defaults[this.modelName] = [];
+
+        this.database.defaults(defaults).write();
     }
 
-    create() {
-        // TODO:
+    create(data: Model) {
+        return this.database.get(this.modelName).push(data).write();
     }
 
-    read() {
-        // FIXME:
-        this.database.get('posts')
-        .push({ id: 1, title: 'lowdb is awesome'})
-        .write();
+    read(id: string) {
+        return this.database.get(this.modelName).find({id}).value()
     }
 
-    update() {
-        // FIXME:
-        this.database.update('count', (n: any) => n + 1)
-        .write();
+    update(id: string, data: Model) {
+        return this.database.get(this.modelName).find({id}).update((n: Model) => data).write();
     }
 
-    delete() {
-        // TODO:
+    delete(id: string) {
+        return this.database.get(this.modelName).remove({id}).write();
     }
 }
