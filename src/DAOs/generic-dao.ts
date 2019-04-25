@@ -19,7 +19,7 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     read(id: string) {
-        return this.database.get(this.modelName).find({id}).value()
+        return this.database.get(this.modelName).find({id}).value();
     }
 
     update(id: string, data: Model) {
@@ -28,5 +28,9 @@ export abstract class GenericDAO<Model extends Base>{
 
     delete(id: string) {
         return this.database.get(this.modelName).remove({id}).write();
+    }
+
+    list() {
+        return this.database.get(this.modelName).value();
     }
 }
