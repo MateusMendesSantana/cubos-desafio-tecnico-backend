@@ -25,7 +25,7 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     update(id: string, data: Model) {
-        return this.database.get(this.modelName).find({id}).update((_n: Model) => data).write();
+        return this.database.get(this.modelName).find({id}).assign((_n: Model) => data).write();
     }
 
     delete(id: string) {
