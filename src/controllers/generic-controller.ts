@@ -32,7 +32,9 @@ export abstract class GenericController<Model extends Base> {
     }
 
     async update(req: any, res: any) {
-        const result = this.dao.update(req.params.id, req.body);
+        const data = this.createInstance(req.body);
+        data.id = req.params.id;
+        const result = this.dao.update(req.params.id, data);
 
         res.send(result);
     }
