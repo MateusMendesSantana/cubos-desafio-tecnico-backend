@@ -11,7 +11,7 @@ const scheduleService = new ScheduleService();
 const scheduleController = new ScheduleController(dao, scheduleService);
 
 router.post('/schedules', scheduleController.create.bind(scheduleController));
-router.patch('/schedules', scheduleController.update.bind(scheduleController));
+router.put('/schedules/:id', scheduleController.update.bind(scheduleController));
 router.get('/schedules', scheduleController.list.bind(scheduleController));
 router.get('/schedules/:id', scheduleController.read.bind(scheduleController));
 router.delete('/schedules/:id', scheduleController.delete.bind(scheduleController));
