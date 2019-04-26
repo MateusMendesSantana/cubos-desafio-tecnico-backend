@@ -2,10 +2,10 @@ import { GenericDAO } from "../DAOs/generic-dao";
 import { Base } from "../models/base";
 
 export abstract class GenericController<Model extends Base> {
-    protected dao: GenericDAO<Model>;
 
-    constructor(dao: GenericDAO<Model>) {
-        this.dao = dao;
+    constructor(
+        protected dao: GenericDAO<Model>
+    ) {
     }
 
     async create(req: any, res: any) {
