@@ -39,6 +39,6 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     list(query: any | Function = {}) {
-        return this.database.get(this.modelName).find(query).value();
+        return this.database.get(this.modelName).filter(query).value();
     }
 }
