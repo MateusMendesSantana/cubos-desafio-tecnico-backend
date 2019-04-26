@@ -30,7 +30,7 @@ export abstract class GenericDAO<Model extends Base>{
         return this.database.get(this.modelName).remove({id}).write();
     }
 
-    list() {
-        return this.database.get(this.modelName).value();
+    list(query: any | Function = {}) {
+        return this.database.get(this.modelName).find(query).value();
     }
 }
