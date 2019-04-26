@@ -12,7 +12,7 @@
 
 ## Execução dos testes:
 
-1. Executar o projeto através do comando: **npm run test**;
+1. Executar os testes através do comando: **npm run test**;
 
 * **OBS:**, apenas um teste foi implementado 
 
