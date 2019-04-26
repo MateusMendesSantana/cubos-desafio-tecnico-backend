@@ -60,7 +60,7 @@ export interface Interval {
     end: string;
 }
 
-enum ScheduleType {
+export enum ScheduleType {
     DAILY = 'DAILY',
     WEEKLY = 'WEEKLY',
     SPECIFIC = 'SPECIFIC'
