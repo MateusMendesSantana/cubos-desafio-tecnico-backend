@@ -2,11 +2,13 @@ import { ScheduleController } from '../controllers/schedule-controller';
 import { ScheduleDAO } from '../DAOs/schedule-dao';
 import { lowdb } from '../datasources/lowdb';
 import { Router } from 'express';
+import { ScheduleService } from '../services/schedule-service';
 
 export const router = Router();
 
 const dao = new ScheduleDAO(lowdb);
-const scheduleController = new ScheduleController(dao);
+const scheduleService = new ScheduleService();
+const scheduleController = new ScheduleController(dao, scheduleService);
 
 router.post('/schedules', scheduleController.create.bind(scheduleController));
 router.patch('/schedules', scheduleController.update.bind(scheduleController));
