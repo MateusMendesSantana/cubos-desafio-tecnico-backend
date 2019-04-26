@@ -32,7 +32,7 @@ export abstract class GenericController<Model extends Base> {
         res.send(result);
     }
 
-    async list(req: any, res: any) {
+    async list(_req: any, res: any) {
         const result = this.dao.list();
 
         res.send(result);
