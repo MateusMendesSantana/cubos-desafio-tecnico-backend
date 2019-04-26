@@ -9,7 +9,8 @@ export abstract class GenericController<Model extends Base> {
     }
 
     async create(req: any, res: any) {
-        const result = this.dao.create(req.body);
+        const data = this.createInstance(req.body);
+        const result = this.dao.create(data);
 
         res.send(result);
     }
