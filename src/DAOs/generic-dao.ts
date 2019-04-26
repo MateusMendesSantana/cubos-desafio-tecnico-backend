@@ -29,7 +29,13 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     delete(id: string) {
-        return this.database.get(this.modelName).remove({id}).write();
+        const result = this.database.get(this.modelName).remove({id}).write();
+
+        if(result.length > 0) {
+            return result[0];
+        } else {
+            return [];
+        }
     }
 
     list(query: any | Function = {}) {
