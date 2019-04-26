@@ -28,8 +28,8 @@ export class ScheduleController extends GenericController<Schedule> {
             }
         }
 
-        const start = moment(req.query.start, 'DD-MM-YYYY', true);
-        const end = moment(req.query.end, 'DD-MM-YYYY', true);
+        const start = moment(req.body.start, 'DD-MM-YYYY', true);
+        const end = moment(req.body.end, 'DD-MM-YYYY', true);
 
         if(!start) {
             res.status(400).send({message: 'incorret value for query.start in request'});
@@ -46,10 +46,12 @@ export class ScheduleController extends GenericController<Schedule> {
                     return true;
                 }
     
-                return this.scheduleService.dateInRange(start.toDate(), end.toDate(), schedule.day);
+                const scheduleDay = moment(schedule.day, 'DD-MM-YYYY', true);
+
+                return this.scheduleService.dateInRange(start, end, scheduleDay);
             });
     
-            res.send(result);
+            res.send(result? result: []);
         }
     }
 }
