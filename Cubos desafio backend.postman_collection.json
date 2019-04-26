@@ -1,0 +1,453 @@
+{
+	"info": {
+		"_postman_id": "1db69257-23f3-4201-af1c-a2b98cac056e",
+		"name": "Cubos desafio backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar schedules",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"start\": \"01-01-2019\",\n\t\"end\": \"01-03-2019\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/schedules",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"schedules"
+					]
+				},
+				"description": "Obtem lista de todos os agendamentos"
+			},
+			"response": [
+				{
+					"name": "Listar schedules",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"start\": \"01-01-2019\",\n\t\"end\": \"01-03-2019\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "247"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"f7-i+/sg+I/KQv+sGLxKeoxJg/QPo8\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 15:50:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"a0ac7e15-3c16-447d-8fc5-f803f5adb8e0\",\n        \"scheduleType\": \"SPECIFIC\",\n        \"day\": \"01-02-2019\",\n        \"interval\": {\n            \"start\": \"07:00\",\n            \"end\": \"08:00\"\n        }\n    },\n    {\n        \"id\": \"0cf1aca6-0a2e-4ac4-9f00-62d37c090c91\",\n        \"scheduleType\": \"DAILY\",\n        \"interval\": {\n            \"start\": \"07:00\",\n            \"end\": \"08:00\"\n        }\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Obter schedule",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/schedules/2b07c1dc-c8b7-4f46-82b0-5a9279d4994",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"schedules",
+						"2b07c1dc-c8b7-4f46-82b0-5a9279d4994"
+					]
+				},
+				"description": "Obtem um agendamento especifico pelo uuid"
+			},
+			"response": []
+		},
+		{
+			"name": "Remover schedule",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/schedules/70227615-0eaf-43ac-b125-8540a40b31a9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"schedules",
+						"70227615-0eaf-43ac-b125-8540a40b31a9"
+					]
+				},
+				"description": "Remove uma instancia pelo uuid, retorna a instancia apagada"
+			},
+			"response": [
+				{
+					"name": "Remover schedule",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/schedules/70227615-0eaf-43ac-b125-8540a40b31a9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"schedules",
+								"70227615-0eaf-43ac-b125-8540a40b31a9"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "132"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"84-z/rnZmDCqwYLBnHI4A3b/cn2Lik\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 15:21:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"70227615-0eaf-43ac-b125-8540a40b31a9\",\n    \"scheduleType\": \"WEEKDAY\",\n    \"weekday\": \"FRIDAY\",\n    \"interval\": {\n        \"start\": \"00:00\",\n        \"end\": \"01:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Criar schedule",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"scheduleType\": \"DAILY\",\n    \"interval\": {\n\t\t\"start\": \"07:00\",\n\t\t\"end\": \"08:00\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/schedules",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"schedules"
+					]
+				},
+				"description": "Cria um novo agedamento. Retorna a instancia criada com o uuid"
+			},
+			"response": [
+				{
+					"name": "Criar schedule Diario",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduleType\": \"DAILY\",\n    \"interval\": {\n\t\t\"start\": \"14:30\",\n\t\t\"end\": \"15:00\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "111"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6f-OuUfD7nj5BDVspB8V+FnhXh4vlA\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 13:37:32 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"2b07c1dc-c8b7-4f46-82b0-5a9279d49694\",\n    \"scheduleType\": \"DAILY\",\n    \"interval\": {\n        \"start\": \"14:30\",\n        \"end\": \"15:00\"\n    }\n}"
+				},
+				{
+					"name": "Criar schedule Semanal",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduleType\": \"WEEKDAY\",\n    \"weekday\": \"FRIDAY\",\n    \"interval\": {\n\t\t\"start\": \"00:00\",\n\t\t\"end\": \"01:00\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "132"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"84-z/rnZmDCqwYLBnHI4A3b/cn2Lik\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 13:47:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"70227615-0eaf-43ac-b125-8540a40b31a9\",\n    \"scheduleType\": \"WEEKDAY\",\n    \"weekday\": \"FRIDAY\",\n    \"interval\": {\n        \"start\": \"00:00\",\n        \"end\": \"01:00\"\n    }\n}"
+				},
+				{
+					"name": "Criar schedule SPECIFIC",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduleType\": \"SPECIFIC\",\n    \"day\": \"01-01-2019\",\n    \"interval\": {\n\t\t\"start\": \"07:00\",\n\t\t\"end\": \"08:00\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "133"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"85-w40d3UsuWXXW1PwmPQQNQh1v3S8\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 26 Apr 2019 15:18:19 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"a0ac7e15-3c16-447d-8fc5-f803f5adb8e0\",\n    \"scheduleType\": \"SPECIFIC\",\n    \"day\": \"01-01-2019\",\n    \"interval\": {\n        \"start\": \"07:00\",\n        \"end\": \"08:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Atualizar schedule",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"scheduleType\": \"WEEKDAY\",\r\n  \"weekday\": \"FRIDAY\",\r\n  \"interval\": {\r\n    \"start\": \"00:00\",\r\n    \"end\": \"03:00\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/schedules/70227615-0eaf-43ac-b125-8540a40b31a9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"schedules",
+						"70227615-0eaf-43ac-b125-8540a40b31a9"
+					]
+				},
+				"description": "Cria um novo agedamento. Retorna a instancia criada com o uuid"
+			},
+			"response": []
+		}
+	]
+}
