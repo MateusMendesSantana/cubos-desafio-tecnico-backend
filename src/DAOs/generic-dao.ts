@@ -15,7 +15,9 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     create(data: Model) {
-        return this.database.get(this.modelName).push(data).write();
+        this.database.get(this.modelName).push(data).write();
+
+        return data;
     }
 
     read(id: string) {
