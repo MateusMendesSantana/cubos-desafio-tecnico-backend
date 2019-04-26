@@ -17,9 +17,9 @@ export class ScheduleController extends GenericController<Schedule> {
     }
 
     async list(req: any, res: any) {
-        if (!req.query) {
+        if (!req.body) {
             super.list(req, res);
-        } if (!req.query.start || !req.query.end) {
+        } if (!req.body.start || !req.body.end) {
             res.status(400).send({message: 'query bad request'});
         }
 
