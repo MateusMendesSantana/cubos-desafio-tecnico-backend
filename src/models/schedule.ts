@@ -4,6 +4,7 @@ import moment from 'moment';
 export class Schedule extends Base {
     public scheduleType!: ScheduleType;
     public day?: string;
+    public weekday?: ScheduleWeekday;
     public interval!: Interval;
 
     public validate() {
@@ -13,6 +14,10 @@ export class Schedule extends Base {
 
         if(!this.day && this.scheduleType === ScheduleType.SPECIFIC) {
             throw new Error('day is required for scheduleType SPECIFIC');
+        }
+
+        if(!this.weekday && this.scheduleType === ScheduleType.WEEKDAY) {
+            throw new Error('weekday is required for scheduleType WEEKDAY');
         }
     
         if(!this.interval) {
@@ -33,8 +38,14 @@ export class Schedule extends Base {
             }
         }
 
+        if(this.weekday) {
+            if(!(this.weekday.toString() in ScheduleWeekday)) {
+                throw new Error('invalid type in ScheduleWeekday');
+            }
+        }
+
         if(!(this.scheduleType.toString() in ScheduleType)) {
-            throw new Error('invalid type in scheduleType');
+            throw new Error('invalid type in ScheduleType');
         }
 
         if(!this.isMomentValid(this.interval.start, 'HH:mm')) {
@@ -62,6 +73,16 @@ export interface Interval {
 
 export enum ScheduleType {
     DAILY = 'DAILY',
-    WEEKLY = 'WEEKLY',
+    WEEKDAY = 'WEEKDAY',
     SPECIFIC = 'SPECIFIC'
+}
+
+export enum ScheduleWeekday {
+    SUNDAY = 'SUNDAY',
+    MONDAY = 'MONDAY',
+    TUESDAY = 'TUESDAY',
+    WEDNESDAY = 'WEDNESDAY',
+    THURSDAY = 'THURSDAY',
+    FRIDAY = 'FRIDAY',
+    SATURDAY = 'SATURDAY',
 } 
