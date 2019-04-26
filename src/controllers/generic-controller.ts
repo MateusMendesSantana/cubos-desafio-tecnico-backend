@@ -10,15 +10,25 @@ export abstract class GenericController<Model extends Base> {
 
     async create(req: any, res: any) {
         const data = this.createInstance(req.body);
-        const result = this.dao.create(data);
 
-        res.send(result);
+        try {
+            data.validate();
+            const result = this.dao.create(data);
+    
+            res.send(result);
+        } catch(error) {
+            res.status(400).send({message: error.message});
+        }
     }
 
     async read(req: any, res: any) {
         const result = this.dao.read(req.params.id);
 
-        res.send(result);
+        if(result) {
+            res.send(result);
+        } else {
+            res.status(500).send();
+        }
     }
 
     async update(req: any, res: any) {

@@ -8,4 +8,6 @@ export abstract class Base {
 
         Object.assign(this, data);
     }
+
+    public abstract validate(): any;
 }
