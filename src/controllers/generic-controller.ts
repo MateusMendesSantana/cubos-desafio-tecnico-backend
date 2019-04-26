@@ -37,4 +37,6 @@ export abstract class GenericController<Model extends Base> {
 
         res.send(result);
     }
+
+    protected abstract createInstance(data: any): Model;
 }
