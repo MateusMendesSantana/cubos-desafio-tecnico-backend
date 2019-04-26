@@ -7,24 +7,24 @@ export class Schedule extends Base {
     public interval!: Interval;
 
     public validate() {
-        if(!this.day) {
-            throw new Error(`day is required`);
-        }
-    
         if(!this.scheduleType) {
-            throw new Error(`scheduleType is required`);
+            throw new Error('scheduleType is required');
+        }
+
+        if(!this.day && this.scheduleType === ScheduleType.SPECIFIC) {
+            throw new Error('day is required for scheduleType SPECIFIC');
         }
     
         if(!this.interval) {
-            throw new Error(`interval is required`);
+            throw new Error('interval is required');
         }
 
         if(!this.interval.start) {
-            throw new Error(`interval.start is required`);
+            throw new Error('interval.start is required');
         }
 
         if(!this.interval.end) {
-            throw new Error(`interval.end is required.`);
+            throw new Error('interval.end is required.');
         }
     
         if(this.day) {
@@ -34,15 +34,15 @@ export class Schedule extends Base {
         }
 
         if(!(this.scheduleType.toString() in ScheduleType)) {
-            throw new Error(`invalid type in scheduleType`);
+            throw new Error('invalid type in scheduleType');
         }
 
         if(!this.isMomentValid(this.interval.start, 'HH:mm')) {
-            throw new Error(`invalid format(HH:mm) in interval.start`);
+            throw new Error('invalid format(HH:mm) in interval.start');
         }
 
         if(!this.isMomentValid(this.interval.start, 'HH:mm')) {
-            throw new Error(`invalid format(HH:mm) in interval.end`);
+            throw new Error('invalid format(HH:mm) in interval.end');
         }
     }
 
@@ -61,7 +61,7 @@ export interface Interval {
 }
 
 enum ScheduleType {
-    Daily = 'DAILY',
-    Weekly = 'WEEKLY',
-    Specific = 'SPECIFIC'
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    SPECIFIC = 'SPECIFIC'
 } 
