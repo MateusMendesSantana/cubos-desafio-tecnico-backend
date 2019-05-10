@@ -18,10 +18,13 @@ export class ScheduleController extends GenericController<Schedule> {
 
     async create(req: any, res: any) {
         if (this.dao.list().some(schedule => {
-            return this.scheduleService.hasConflit(req.body, schedule);
+            const a = this.createInstance(req.body);
+            const b = this.createInstance(schedule);
+
+            return this.scheduleService.hasConflit(a, b);
         })) {
             res.status(500).send({
-                message: 'cannot create instance'
+                message: 'cannot create instance, there was a conflict with other schedules'
             });
         } else {
             super.create(req, res);

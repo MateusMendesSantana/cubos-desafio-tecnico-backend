@@ -1,5 +1,5 @@
 import { GenericDAO } from "./generic-dao";
-import { Schedule, ScheduleType } from "../models/schedule";
+import { Schedule } from "../models/schedule";
 import { ScheduleService } from "../services/schedule-service";
 
 export class ScheduleDAO extends GenericDAO<Schedule> {

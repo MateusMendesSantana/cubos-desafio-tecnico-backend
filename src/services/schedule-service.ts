@@ -8,7 +8,7 @@ export class ScheduleService {
     }
 
     public dateOverlaps(startA: string, endA: string, startB: string, endB: string) {
-        return endA < startB || startA > endB;
+        return startA < endB && endA > startB;
     }
 
     public hasConflit(a: Schedule, b: Schedule) {

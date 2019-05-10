@@ -1,5 +1,4 @@
 import { Base } from "../models/base";
-import { Schedule } from "../models/schedule";
 
 export abstract class GenericDAO<Model extends Base>{
     protected database: any;
@@ -39,7 +38,7 @@ export abstract class GenericDAO<Model extends Base>{
         }
     }
 
-    list(query: any | ((instance: any) => {})): Model[] {
+    list(query: any | ((instance: any) => {}) = {}): Model[] {
         return this.database.get(this.modelName).filter(query).value();
     }
 }
