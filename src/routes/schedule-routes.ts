@@ -6,8 +6,8 @@ import { ScheduleService } from '../services/schedule-service';
 
 export const router = Router();
 
-const dao = new ScheduleDAO(lowdb);
 const scheduleService = new ScheduleService();
+const dao = new ScheduleDAO(lowdb, scheduleService);
 const scheduleController = new ScheduleController(dao, scheduleService);
 
 router.post('/schedules', scheduleController.create.bind(scheduleController));

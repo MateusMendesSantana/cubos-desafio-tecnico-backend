@@ -9,11 +9,11 @@ export abstract class GenericController<Model extends Base> {
     }
 
     async create(req: any, res: any) {
-        const data = this.createInstance(req.body);
+        const instance = this.createInstance(req.body);
 
         try {
-            data.validate();
-            const result = this.dao.create(data);
+            this.validate(instance);
+            const result = this.dao.create(instance);
     
             res.send(result);
         } catch(error) {
@@ -52,4 +52,5 @@ export abstract class GenericController<Model extends Base> {
     }
 
     protected abstract createInstance(data: any): Model;
+    protected abstract validate(instance: Base): any;
 }

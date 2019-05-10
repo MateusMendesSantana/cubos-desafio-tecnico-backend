@@ -1,11 +1,27 @@
-import moment from "moment";
-import { extendMoment } from 'moment-range';
+import { Schedule } from "../models/schedule";
+import moment from 'moment';
 
 export class ScheduleService {
 
-    public dateInRange(start: moment.Moment, end: moment.Moment, date: moment.Moment) {
-        const range = extendMoment(moment as any).range(start, end);
-      
-        return range.contains(date);
+    public dateInRange(start: string, end: string, date: string) {
+        return date >= start && date <= end;
+    }
+
+    public dateOverlaps(startA: string, endA: string, startB: string, endB: string) {
+        return endA < startB || startA > endB;
+    }
+
+    public hasConflit(a: Schedule, b: Schedule) {
+        if (
+            a.isDaily() || b.isDaily() ||
+            (a.isSpecific() && a.isSpecific() && a.day === b.day) ||
+            (a.isWeekday() && b.isWeekday() && a.weekday === b.weekday) || 
+            (a.isWeekday() && b.isSpecific() && a.weekday === moment(b.day).day()) ||
+            (a.isSpecific() && b.isWeekday() && moment(a.day).day() === b.weekday)
+        ) {
+            return this.dateOverlaps(a.interval.start, a.interval.end, b.interval.start, b.interval.end);
+        } else {
+            return false;
+        }
     }
 }
