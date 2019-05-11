@@ -1,11 +1,11 @@
 import uuidv4 from 'uuid/v4';
+import { IsUUID } from 'class-validator';
 
 export abstract class Base {
-    public id: string;
+    @IsUUID('4')
+    public id = uuidv4();
 
     constructor(data: any) {
-        this.id = uuidv4();
-
         Object.assign(this, data);
     }
 }
