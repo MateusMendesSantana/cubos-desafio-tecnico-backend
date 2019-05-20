@@ -10,8 +10,8 @@ const scheduleService = new ScheduleService();
 const dao = new ScheduleDAO(lowdb, scheduleService);
 const scheduleController = new ScheduleController(dao, scheduleService);
 
-router.post('/schedules', scheduleController.create.bind(scheduleController));
-router.put('/schedules/:id', scheduleController.update.bind(scheduleController));
-router.get('/schedules', scheduleController.list.bind(scheduleController));
-router.get('/schedules/:id', scheduleController.read.bind(scheduleController));
-router.delete('/schedules/:id', scheduleController.delete.bind(scheduleController));
+router.post('/schedules'        , (...args) => scheduleController.create(...args));
+router.put('/schedules/:id'     , (...args) => scheduleController.update(...args));
+router.get('/schedules'         , (...args) => scheduleController.list(...args));
+router.get('/schedules/:id'     , (...args) => scheduleController.read(...args));
+router.delete('/schedules/:id'  , (...args) => scheduleController.delete(...args));

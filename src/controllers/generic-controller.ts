@@ -9,7 +9,7 @@ export abstract class GenericController<Model extends Base> {
     ) {
     }
 
-    async create(req: any, res: any) {
+    async create(req: any, res: any, _next: any) {
         const instance = this.createInstance(req.body);
 
         validate(instance).then(errors => {
@@ -28,7 +28,7 @@ export abstract class GenericController<Model extends Base> {
         });
     }
 
-    async read(req: any, res: any) {
+    async read(req: any, res: any, _next: any) {
         const result = this.dao.read(req.params.id);
 
         if(result) {
@@ -38,20 +38,20 @@ export abstract class GenericController<Model extends Base> {
         }
     }
 
-    async update(req: any, res: any) {
+    async update(req: any, res: any, _next: any) {
         const data = this.createInstance(req.body);
         const result = this.dao.update(req.params.id, data);
 
         res.send(result);
     }
 
-    async delete(req: any, res: any) {
+    async delete(req: any, res: any, _next: any) {
         const result = this.dao.delete(req.params.id);
 
         res.send(result);
     }
 
-    async list(_req: any, res: any) {
+    async list(_req: any, res: any, _next: any) {
         const result = this.dao.list();
 
         res.send(result);

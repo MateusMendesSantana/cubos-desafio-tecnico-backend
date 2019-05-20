@@ -16,7 +16,7 @@ export class ScheduleController extends GenericController<Schedule> {
         return new Schedule(data);
     }
 
-    async create(req: any, res: any) {
+    async create(req: any, res: any, next: any) {
         if (this.dao.list().some(schedule => {
             const a = this.createInstance(req.body);
             const b = this.createInstance(schedule);
@@ -27,13 +27,13 @@ export class ScheduleController extends GenericController<Schedule> {
                 message: 'cannot create instance, there was a conflict with other schedules'
             });
         } else {
-            super.create(req, res);
+            super.create(req, res, next);
         }
     }
 
-    async list(req: any, res: any) {
+    async list(req: any, res: any, next: any) {
         if (Object.keys(req.body).length === 0) {
-            super.list(req, res);
+            super.list(req, res, next);
         } else {
             if(!req.body.start || !req.body.end) {
                 res.status(400).send({
