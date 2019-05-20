@@ -1,6 +1,5 @@
 import { GenericDAO } from "../DAOs/generic-dao";
 import { Base } from "../models/base";
-import { validate, ValidationError } from "class-validator";
 
 export abstract class GenericController<Model extends Base> {
 
@@ -11,21 +10,9 @@ export abstract class GenericController<Model extends Base> {
 
     async create(req: any, res: any, _next: any) {
         const instance = this.createInstance(req.body);
+        const result = this.dao.create(instance);
 
-        validate(instance).then(errors => {
-            if(errors.length > 0) {
-                res.status(400).send({
-                    message: 'invalid instance',
-                    erros: errors.map(this.mapError)
-                });
-            } else {
-                const result = this.dao.create(instance);
-    
-                res.send(result);
-            }
-        }).catch(error => {
-            res.status(400).send({message: error.message});
-        });
+        res.send(result);
     }
 
     async read(req: any, res: any, _next: any) {
@@ -55,15 +42,6 @@ export abstract class GenericController<Model extends Base> {
         const result = this.dao.list();
 
         res.send(result);
-    }
-
-    private mapError = ({property, value, constraints, children}: ValidationError): ValidationError => {
-        return {
-            property,
-            value,
-            constraints,
-            children: children.map(this.mapError)
-        };
     }
 
     protected abstract createInstance(data: any): Model;
