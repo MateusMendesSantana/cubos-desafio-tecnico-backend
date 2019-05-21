@@ -1,5 +1,6 @@
 import { GenericDAO } from "../DAOs/generic-dao";
 import { Base } from "../models/base";
+import { validationResult } from "express-validator/check";
 
 export abstract class GenericController<Model extends Base> {
 
@@ -9,10 +10,20 @@ export abstract class GenericController<Model extends Base> {
     }
 
     async create(req: any, res: any, _next: any) {
-        const instance = this.createInstance(req.body);
-        const result = this.dao.create(instance);
+        const errors = validationResult(req).formatWith(this.validationHandler);
 
-        res.send(result);
+        if (errors.isEmpty()) {
+            const instance = this.createInstance(req.body);
+            const result = this.dao.create(instance);
+
+            res.send(result);
+        } else {
+            return res.json({ errors: errors.array() });
+        }
+    }
+
+    validationHandler({ msg, param }: any) {
+        return `${param} ${msg}`;
     }
 
     async read(req: any, res: any, _next: any) {

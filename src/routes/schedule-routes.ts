@@ -10,7 +10,7 @@ const scheduleService = new ScheduleService();
 const dao = new ScheduleDAO(lowdb, scheduleService);
 const scheduleController = new ScheduleController(dao, scheduleService);
 
-router.post('/schedules'        , (...args) => scheduleController.create(...args));
+router.post('/schedules'        , scheduleController.validate(), scheduleController.create.bind(scheduleController));
 router.put('/schedules/:id'     , (...args) => scheduleController.update(...args));
 router.get('/schedules'         , (...args) => scheduleController.list(...args));
 router.get('/schedules/:id'     , (...args) => scheduleController.read(...args));

@@ -1,8 +1,8 @@
 import { GenericController } from './generic-controller';
-import { Schedule, ScheduleType, ScheduleWeekday } from '../models/schedule';
+import { Schedule, ScheduleType, ScheduleWeekday} from '../models/schedule';
 import { ScheduleService } from '../services/schedule-service';
 import { ScheduleDAO } from '../DAOs/schedule-dao';
-import moment from 'moment';
+import { body } from 'express-validator/check';
 
 export class ScheduleController extends GenericController<Schedule> {
     constructor(
@@ -55,57 +55,32 @@ export class ScheduleController extends GenericController<Schedule> {
         }
     }
 
-    public validate(schedule: Schedule) {
-        if(!schedule.scheduleType) {
-            throw new Error('scheduleType is required');
-        }
+    validate() {
+        return [
+            body('scheduleType')
+            .exists()
+            .withMessage('cannot be empty')
+            .isIn(Object.values(ScheduleType))
+            .withMessage('must be DAILY, SPECIFIC or WEEKDAY'),
 
-        if(!schedule.day && schedule.scheduleType === ScheduleType.SPECIFIC) {
-            throw new Error('day is required for scheduleType SPECIFIC');
-        }
+            body('day')
+            .custom((value, { req }) => {
+                return req.body.scheduleType !== ScheduleType.SPECIFIC || (
+                    req.body.scheduleType !== ScheduleType.SPECIFIC && value);
+            })
+            .withMessage('cannot be empty for scheduleType SPECIFIC')
+            .exists()
+            .matches(/\d{2}-\d{2}-\d{4}/g)
+            .withMessage('needs to be in "hh:mm" format'),
 
-        if(!schedule.weekday && schedule.scheduleType === ScheduleType.WEEKDAY) {
-            throw new Error('weekday is required for scheduleType WEEKDAY');
-        }
-    
-        if(!schedule.interval) {
-            throw new Error('interval is required');
-        }
-
-        if(!schedule.interval.start) {
-            throw new Error('interval.start is required');
-        }
-
-        if(!schedule.interval.end) {
-            throw new Error('interval.end is required.');
-        }
-    
-        if(schedule.day) {
-            if(!this.isDateValid(schedule.day, 'DD-MM-YYYY')) {
-                throw new Error('day invalid format(DD-MM-YYYY)');
-            }
-        }
-
-        if(schedule.weekday) {
-            if(!(schedule.weekday.toString() in ScheduleWeekday)) {
-                throw new Error('invalid type in ScheduleWeekday');
-            }
-        }
-
-        if(!(schedule.scheduleType.toString() in ScheduleType)) {
-            throw new Error('invalid type in ScheduleType');
-        }
-
-        if(!this.isDateValid(schedule.interval.start, 'HH:mm')) {
-            throw new Error('invalid format(HH:mm) in interval.start');
-        }
-
-        if(!this.isDateValid(schedule.interval.start, 'HH:mm')) {
-            throw new Error('invalid format(HH:mm) in interval.end');
-        }
-    }
-
-    isDateValid(value: string, format: string) {
-        return moment(value, format, true).isValid();
+            body('weekday')
+            .custom((value, { req }) => {
+                return req.body.scheduleType !== ScheduleType.WEEKDAY || (
+                    req.body.scheduleType !== ScheduleType.WEEKDAY && value);
+            })
+            .withMessage('cannot be empty for scheduleType WEEKDAY')
+            .isIn(Object.values(ScheduleWeekday))
+            .withMessage('needs to be a day of the week')
+        ];
     }
 }
