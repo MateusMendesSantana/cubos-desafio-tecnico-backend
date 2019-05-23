@@ -34,18 +34,13 @@ export class ScheduleController extends GenericController<Schedule> {
     async list(req: any, res: any, next: any) {
         if (Object.keys(req.body).length === 0) {
             super.list(req, res, next);
-        } else {
-            if(!req.body.start || !req.body.end) {
-                res.status(400).send({
-                    message: 'query bad request',
-                    exemple: '{"start": "01-01-2019", "end": "04-03-2019"}'
-                });
-            }
-        }
-
-        if(!req.body.start) {
+        } else if(!req.body.start || !req.body.end) {
+            res.status(400).send({
+                message: 'query bad request',
+                exemple: '{"start": "01-01-2019", "end": "04-03-2019"}'
+            });
+        } else if(!req.body.start) {
             res.status(400).send({message: 'incorret value for query.start in request'});
-
         } else if(!req.body.end) {
             res.status(400).send({message: 'incorret value for query.end in request'});
         } else {
