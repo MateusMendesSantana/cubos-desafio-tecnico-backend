@@ -7,12 +7,13 @@ export class ScheduleDAO extends GenericDAO<Schedule> {
         database: any,
         protected scheduleService: ScheduleService
     ) {
-        super('schedule', database);
+        super(Schedule, 'schedule', database);
     }
 
     list(query?: {start: string, end: string}) {
         if(query) {
-            return super.list((schedule: Schedule) => {
+            return super.list((schedule: any) => {
+                schedule = new Schedule(schedule);
                 if(schedule.isDaily()) {
                     return true;
                 }
