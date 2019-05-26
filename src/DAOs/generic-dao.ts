@@ -20,7 +20,9 @@ export abstract class GenericDAO<Model extends Base>{
     }
 
     read(id: string): Model {
-        return this.datasource.get(this.modelName).find({id}).value();
+        const data = this.datasource.get(this.modelName).find({id}).value();
+
+        return this.createInstance(data);
     }
 
     update(id: string, data: Model) {
@@ -31,15 +33,19 @@ export abstract class GenericDAO<Model extends Base>{
         const result = this.datasource.get(this.modelName).remove({id}).write();
 
         if(result.length > 0) {
-            return result[0];
+            return this.createInstance(result[0]);
         } else {
             return [];
         }
     }
 
-    list(query: any | ((instance: any) => {}) = {}): Model[] {
+    list(query: any | ((instance: Model) => {}) = {}): Model[] {
         const result: any[] = this.datasource.get(this.modelName).filter(query).value();
 
-        return result.map(data => new this.model(data));
+        return result.map(data => this.createInstance(data));
+    }
+
+    createInstance(data: any) {
+        return new this.model(data) as Model;
     }
 }

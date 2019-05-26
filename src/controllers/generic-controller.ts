@@ -13,7 +13,7 @@ export abstract class GenericController<Model extends Base> {
         const errors = validationResult(req).formatWith(this.validationHandler);
 
         if (errors.isEmpty()) {
-            const instance = this.createInstance(req.body);
+            const instance = this.dao.createInstance(req.body);
             const result = this.dao.create(instance);
 
             res.send(result);
@@ -37,7 +37,7 @@ export abstract class GenericController<Model extends Base> {
     }
 
     async update(req: any, res: any, _next: any) {
-        const data = this.createInstance(req.body);
+        const data = this.dao.createInstance(req.body);
         const result = this.dao.update(req.params.id, data);
 
         res.send(result);
@@ -55,6 +55,5 @@ export abstract class GenericController<Model extends Base> {
         res.send(result);
     }
 
-    protected abstract createInstance(data: any): Model;
-    protected abstract validate(instance: Base): any;
+    protected abstract generateConstrains(instance: Base): any;
 }

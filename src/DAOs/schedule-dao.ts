@@ -13,13 +13,15 @@ export class ScheduleDAO extends GenericDAO<Schedule> {
     list(query?: {start: string, end: string}) {
         if(query) {
             return super.list((schedule: any) => {
-                schedule = new Schedule(schedule);
+                schedule = this.createInstance(schedule);
+
                 if(schedule.isDaily()) {
                     return true;
                 }
     
                 if(schedule.isWeekday()) {
-                    return schedule.weekday;
+                    // TODO
+                    return true;
                 }
     
                 if(schedule.day) {

@@ -6,11 +6,6 @@ export class Schedule extends Base {
     public weekday?: ScheduleWeekday;
     public interval!: Interval;
 
-    constructor(data: any) {
-        data.interval = new Interval(data.interval);
-        super(data);
-    }
-
     public isDaily() {
         return this.scheduleType === ScheduleType.DAILY;
     }
@@ -27,10 +22,6 @@ export class Schedule extends Base {
 export class Interval {
     public start!: string;
     public end!: string;
-
-    constructor(data: any) {
-        Object.assign(this, data);
-    }
 }
 
 export enum ScheduleType {

@@ -1,25 +1,24 @@
 import { GenericController } from './generic-controller';
-import { Schedule, ScheduleType, ScheduleWeekday} from '../models/schedule';
+import { Schedule, ScheduleType, ScheduleWeekday } from '../models/schedule';
 import { ScheduleService } from '../services/schedule-service';
 import { ScheduleDAO } from '../DAOs/schedule-dao';
 import { body } from 'express-validator/check';
 
 export class ScheduleController extends GenericController<Schedule> {
+    public constrains: any[];
+
     constructor(
         protected dao: ScheduleDAO,
         protected scheduleService: ScheduleService
     ) {
         super(dao);
-    }
-
-    protected createInstance(data: any): Schedule {
-        return new Schedule(data);
+        this.constrains = this.generateConstrains();
     }
 
     async create(req: any, res: any, next: any) {
         if (this.dao.list().some(schedule => {
-            const a = this.createInstance(req.body);
-            const b = this.createInstance(schedule);
+            const a = this.dao.createInstance(req.body);
+            const b = this.dao.createInstance(schedule);
 
             return this.scheduleService.hasConflit(a, b);
         })) {
@@ -50,7 +49,27 @@ export class ScheduleController extends GenericController<Schedule> {
         }
     }
 
-    validate() {
+    generateConstrains() {
+        const customDayValidator = (value: any, { req }: any) => {
+            if(req.body.scheduleType === ScheduleType.SPECIFIC) {
+                if(!value) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        const customWeekdayValidator = (value: any, { req }: any) => {
+            if(req.body.scheduleType === ScheduleType.WEEKDAY) {
+                if(!value) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
         return [
             body('scheduleType')
             .exists()
@@ -59,23 +78,38 @@ export class ScheduleController extends GenericController<Schedule> {
             .withMessage('must be DAILY, SPECIFIC or WEEKDAY'),
 
             body('day')
-            .custom((value, { req }) => {
-                return req.body.scheduleType !== ScheduleType.SPECIFIC || (
-                    req.body.scheduleType !== ScheduleType.SPECIFIC && value);
-            })
+            .custom(customDayValidator)
             .withMessage('cannot be empty for scheduleType SPECIFIC')
-            .exists()
-            .matches(/\d{2}-\d{2}-\d{4}/g)
-            .withMessage('needs to be in "hh:mm" format'),
+            .custom(customDayValidator)
+            .custom((value: string) => {
+                return !value || (value.length <= 10 && value.match(/\d{2}-\d{2}-\d{4}/g)!.length > 0);
+            })
+            .withMessage('needs to be in dd-mm-yyyy format'),
 
             body('weekday')
-            .custom((value, { req }) => {
-                return req.body.scheduleType !== ScheduleType.WEEKDAY || (
-                    req.body.scheduleType !== ScheduleType.WEEKDAY && value);
-            })
+            .custom(customWeekdayValidator)
             .withMessage('cannot be empty for scheduleType WEEKDAY')
-            .isIn(Object.values(ScheduleWeekday))
-            .withMessage('needs to be a day of the week')
+            .custom(customWeekdayValidator)
+            .custom((value: any) => {
+                return !value || Object.values(ScheduleWeekday).includes(value)
+            })
+            .withMessage('needs to be a day of the week'),
+
+            body('interval')
+            .exists()
+            .withMessage('cannot be empty'),
+
+            body('interval.start')
+            .exists()
+            .withMessage('cannot be empty')
+            .matches(/\d{2}:\d{2}/g)
+            .withMessage('needs to be in hh:mm format'),
+
+            body('interval.end')
+            .exists()
+            .withMessage('cannot be empty')
+            .matches(/\d{2}:\d{2}/g)
+            .withMessage('needs to be in hh:mm format'),
         ];
     }
 }
