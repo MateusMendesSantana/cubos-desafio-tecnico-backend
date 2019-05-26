@@ -22,7 +22,7 @@ export class ScheduleController extends GenericController<Schedule> {
 
             return this.scheduleService.hasConflit(a, b);
         })) {
-            res.status(500).send({
+            res.status(400).send({
                 message: 'cannot create instance, there was a conflict with other schedules'
             });
         } else {
