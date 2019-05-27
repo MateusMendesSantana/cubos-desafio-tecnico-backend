@@ -2,7 +2,7 @@ import { GenericController } from './generic-controller';
 import { Schedule, ScheduleType, ScheduleWeekday } from '../models/schedule';
 import { ScheduleService } from '../services/schedule-service';
 import { ScheduleDAO } from '../DAOs/schedule-dao';
-import { body } from 'express-validator/check';
+import { body, validationResult } from 'express-validator/check';
 
 export class ScheduleController extends GenericController<Schedule> {
     public constrains: any[];
@@ -16,7 +16,9 @@ export class ScheduleController extends GenericController<Schedule> {
     }
 
     async create(req: any, res: any, next: any) {
-        if (this.dao.list().some(schedule => {
+        const errors = validationResult(req).formatWith(this.validationHandler);
+
+        if (errors.isEmpty() && this.dao.list().some(schedule => {
             const a = this.dao.createInstance(req.body);
             const b = this.dao.createInstance(schedule);
 
