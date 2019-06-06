@@ -12,8 +12,8 @@ export class ScheduleDAO extends GenericDAO<Schedule> {
 
     list(query?: {start: string, end: string}) {
         if(query) {
-            return super.list((schedule: any) => {
-                schedule = this.createInstance(schedule);
+            return super.list((data: any) => {
+                const schedule: Schedule = this.createInstance(data);
 
                 if(schedule.isDaily()) {
                     return true;
